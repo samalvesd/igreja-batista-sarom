@@ -238,26 +238,40 @@
     var prevBtn = document.getElementById('galleryPrev');
     var nextBtn = document.getElementById('galleryNext');
 
-    // Placeholder captions until /public/assets/gallery/* photos are provided
     var slides = [
-      'Fachada da igreja',
-      'Momento de louvor',
-      'Escola bíblica',
-      'Comunhão em família',
-      'Culto de oração'
+      { src: 'assets/gallery/igreja-01.jpeg', caption: 'Confraternização em família' },
+      { src: 'assets/gallery/igreja-02.jpeg', caption: 'Batismo nas águas' },
+      { src: 'assets/gallery/igreja-03.jpeg', caption: 'Celebração de 10 anos da igreja' },
+      { src: 'assets/gallery/igreja-04.jpeg', caption: 'Momento de comunhão em grupo' },
+      { src: 'assets/gallery/igreja-05.jpeg', caption: 'Culto especial: Mulheres que Oram' },
+      { src: 'assets/gallery/igreja-06.jpeg', caption: 'Congregação reunida' },
+      { src: 'assets/gallery/igreja-07.jpeg', caption: 'Homenagem em culto especial' },
+      { src: 'assets/gallery/igreja-08.jpeg', caption: 'Escola bíblica infantil' },
+      { src: 'assets/gallery/igreja-09.jpeg', caption: 'Reunião de comunhão em família' }
     ];
 
     var current = 0, timer = null;
 
     function build(){
       viewport.innerHTML = '';
-      slides.forEach(function(cap, i){
+      slides.forEach(function(slide, i){
         var div = document.createElement('div');
         div.className = 'gallery-slide' + (i===0 ? ' active' : '');
         div.setAttribute('role','group');
         div.setAttribute('aria-roledescription','slide');
         div.setAttribute('aria-label', (i+1) + ' de ' + slides.length);
-        div.innerHTML = '<span class="cap">' + cap + ' — foto em breve</span>';
+
+        var img = document.createElement('img');
+        img.src = slide.src;
+        img.alt = slide.caption;
+        img.loading = i === 0 ? 'eager' : 'lazy';
+        div.appendChild(img);
+
+        var cap = document.createElement('span');
+        cap.className = 'cap';
+        cap.textContent = slide.caption;
+        div.appendChild(cap);
+
         viewport.appendChild(div);
       });
       dotsWrap.innerHTML = '';
