@@ -47,9 +47,6 @@
     --sp-8: 4rem;      /* 64px */
     --sp-9: 6rem;      /* 96px */
 
-    /* Container-lines tokens (SKILL: container-lines) */
-    --line-color: rgba(198,161,91,0.32);
-    --line-color-soft: rgba(198,161,91,0.16);
     --corner-size: 6px;
     --touch-min: 44px;
   }
@@ -86,17 +83,7 @@
 
   .container{max-width:var(--max-w); margin:0 auto; padding:0 var(--edge);}
 
-  /* ===== CONTAINER LINES (SKILL: container-lines) ===== */
-  /* Page-level vertical guides at the content container's edges, gold hairline
-     tuned to stay visible across both the warm-white and near-black sections. */
   .page-shell{position:relative; isolation:isolate;}
-  .page-shell::before,
-  .page-shell::after{
-    content:''; position:absolute; top:0; bottom:0; z-index:0;
-    width:1px; background:var(--line-color); pointer-events:none;
-  }
-  .page-shell::before{ left:max(var(--edge), calc((100vw - var(--max-w)) / 2)); }
-  .page-shell::after{ right:max(var(--edge), calc((100vw - var(--max-w)) / 2)); }
 
   /* Corner squares: reserved for the hero only, so the device reads as a signature
      rather than a repeated decoration (per the skill's restraint rule). */
