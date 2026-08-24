@@ -146,7 +146,7 @@
     content:''; position:absolute; left:0; bottom:0; height:1px; width:0;
     background:var(--gold); transition:width 0.3s ease;
   }
-  .nav-links a:hover::after, .nav-links a.active::after{width:100%;}
+  .nav-links a:hover::after{width:100%;}
 
   .nav-toggle{
     display:none; background:none; border:none;
@@ -312,6 +312,7 @@
   .culto-desc{color:rgba(247,245,239,0.82); font-size:0.98rem;}
   .culto-item.emphasis .culto-time{color:var(--warm-white);}
   .culto-item.emphasis{background:linear-gradient(90deg, rgba(104,139,88,0.18), transparent);}
+  .cultos-cta{margin-top:2.6rem; text-align:center;}
 
   @media (max-width:640px){
     .culto-item{grid-template-columns:1fr; gap:0.3rem; padding-left:1.6rem;}
@@ -429,9 +430,9 @@
   .footer-nav a{text-decoration:none; font-size:0.85rem; color:var(--black);}
   .footer-nav a:hover{color:var(--moss-deep);}
   .footer-bottom{
-    display:flex; flex-wrap:wrap; justify-content:center; gap:1rem;
+    display:flex; flex-direction:column; align-items:center; gap:0.4rem;
     padding-top:1.4rem; border-top:1px solid rgba(23,23,23,0.08);
-    font-size:0.78rem; color:#5a5a5a;
+    font-size:0.78rem; color:#5a5a5a; text-align:center;
   }
 
   .visually-hidden{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
