@@ -2,7 +2,7 @@
 
 Landing page institucional da **Igreja Batista Sarom**, com apresentação da igreja, horários de cultos, formulário de membros, galeria de fotos e canal de contato via WhatsApp.
 
-Site em página única (single-page), 100% estático, escrito em HTML, CSS e JavaScript puro, sem necessidade de build ou back-end.
+Site em página única (single-page), 100% estático, escrito em HTML, CSS e JavaScript puro, sem necessidade de build ou back-end. Marcação, estilos e scripts ficam separados em arquivos próprios para facilitar manutenção.
 
 ## ✨ Funcionalidades
 
@@ -27,7 +27,7 @@ Todas as bibliotecas externas são carregadas via CDN — não há dependências
 
 ## 🚀 Como executar localmente
 
-Por ser um arquivo único e estático, basta abrir `index.html` diretamente no navegador ou servir a pasta com qualquer servidor HTTP simples:
+Por ser um site estático, basta abrir `index.html` diretamente no navegador ou servir a pasta com qualquer servidor HTTP simples:
 
 ```bash
 # Python
@@ -43,7 +43,14 @@ Depois acesse `http://localhost:8000`.
 
 ```
 igreja-batista-sarom/
-└── index.html   # página completa (marcação, estilos e scripts)
+├── index.html          # marcação (HTML) das seções da página
+├── assets/
+│   ├── css/
+│   │   └── styles.css  # estilos (variáveis, layout, componentes, responsividade)
+│   ├── js/
+│   │   └── main.js     # comportamento (animações, formulário, galeria, hero 3D)
+│   └── hero-culto.jpeg # foto de fundo da seção hero
+└── README.md
 ```
 
 ## 📌 Observações
