@@ -85,7 +85,14 @@
     font-weight:600;
     color:var(--moss-deep);
   }
-  .eyebrow.on-dark{color:var(--gold); text-shadow:0 1px 8px rgba(0,0,0,0.6);}
+  /* Texto solto sobre a foto (sem caixa), com mais peso e sombra reforçada
+     para garantir leitura em qualquer trecho, claro ou escuro, da imagem. */
+  .eyebrow.on-dark{
+    color:var(--gold);
+    font-weight:700;
+    font-size:0.78rem;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.75), 0 1px 3px rgba(0,0,0,0.65);
+  }
 
   .skip-link{
     position:absolute; left:-999px; top:0;
@@ -232,7 +239,9 @@
   .btn-primary{background:var(--moss-deep); color:var(--warm-white);}
   .btn-primary:hover{background:#3d5537;}
   .btn-secondary{border-color:rgba(247,245,239,0.55); color:var(--warm-white);}
-  .btn-secondary:hover{border-color:var(--gold); color:var(--gold);}
+  /* Preenchimento sólido no hover (em vez de só trocar a cor do texto) garante
+     contraste sobre a foto do hero, independente do que estiver atrás. */
+  .btn-secondary:hover{background:var(--gold); border-color:var(--gold); color:var(--black);}
   .btn-gold{background:var(--gold); color:var(--black);}
   .btn-gold:hover{background:#b48f4c;}
 
