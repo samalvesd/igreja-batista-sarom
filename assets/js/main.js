@@ -208,9 +208,9 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
-          _subject: 'Novo interesse em fazer parte - site da igreja',
-          nome: name,
-          whatsapp: phone || 'não informado'
+          _subject: 'Um novo visitante quer fazer parte da Igreja Batista Sarom',
+          Nome: name,
+          Telefone: phone || 'não informado'
         })
       })
         .then(function(res){ if(!res.ok) throw new Error('request failed'); return res.json(); })
