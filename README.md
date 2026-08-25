@@ -9,7 +9,7 @@ Site em página única (single-page), 100% estático, escrito em HTML, CSS e Jav
 - **Hero animado** com efeito 3D (Three.js) e canvas de fundo.
 - **Seção "Sobre"** com a proposta e missão da igreja.
 - **Cultos**: horários e informações dos encontros.
-- **Comunidade**: formulário para visitantes se cadastrarem como membros, com lista dinâmica (dados mantidos apenas na sessão do navegador — sem persistência em banco de dados).
+- **Comunidade**: formulário "Quer fazer parte?" — envia nome e WhatsApp por e-mail para a igreja via [FormSubmit](https://formsubmit.co/), sem necessidade de back-end próprio.
 - **Galeria de fotos** em formato carrossel, navegável por botões e teclado.
 - **Contato**: botão direto para WhatsApp e vídeo de mensagem do pastor.
 - Animações de entrada e rolagem com **GSAP** + **ScrollTrigger**.
@@ -55,7 +55,7 @@ igreja-batista-sarom/
 
 ## 📌 Observações
 
-- O formulário de membros e a lista de nomes exibida na página **não persistem** os dados — eles são reiniciados a cada recarregamento do site. Para persistência real, é necessário integrar com um back-end ou serviço de armazenamento.
+- O formulário "Quer fazer parte?" envia os dados para `igrejabatistasarom@gmail.com` via FormSubmit. **Na primeira submissão real**, o FormSubmit envia um e-mail de confirmação para esse endereço — é preciso clicar no link de confirmação uma única vez para o serviço passar a entregar as mensagens seguintes.
 - O botão do WhatsApp e o vídeo do pastor estão com placeholders e devem ser configurados com o link/arquivo definitivos antes da publicação em produção.
 
 ## 📄 Licença

@@ -148,18 +148,17 @@
 
       <div class="community-grid">
         <div class="member-box" data-reveal>
-          <h3>Deixe seu nome com a gente</h3>
-          <p>Junte-se à lista de quem já faz parte desta caminhada.</p>
+          <h3>Quer fazer parte?</h3>
+          <p>Deixe seu nome abaixo e um dos nossos líderes vai te procurar.</p>
 
           <form class="member-form" id="memberForm" novalidate>
             <label for="memberName">Seu nome</label>
-            <input type="text" id="memberName" name="memberName" placeholder="Digite seu nome" maxlength="60" autocomplete="name">
-            <button type="submit" class="btn btn-primary member-form-submit">Adicionar meu nome</button>
+            <input type="text" id="memberName" name="memberName" placeholder="Seu nome" maxlength="60" autocomplete="name" required>
+            <label for="memberPhone">WhatsApp (opcional)</label>
+            <input type="tel" id="memberPhone" name="memberPhone" placeholder="WhatsApp (opcional)" maxlength="20" autocomplete="tel">
+            <button type="submit" class="btn btn-primary member-form-submit">Quero fazer parte</button>
           </form>
           <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
-
-          <ul class="member-list" id="memberList" aria-label="Lista de membros"></ul>
-          <p class="member-empty" id="memberEmpty">Ainda não há nomes na lista. Seja a primeira pessoa a se juntar!</p>
         </div>
 
         <div class="gallery" data-reveal aria-label="Galeria de fotos da igreja">

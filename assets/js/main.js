@@ -167,32 +167,18 @@
     });
   })();
 
-  /* ================= MEMBER LIST ================= */
-  (function memberModule(){
-    var form = document.getElementById('memberForm');
-    var input = document.getElementById('memberName');
-    var list = document.getElementById('memberList');
-    var empty = document.getElementById('memberEmpty');
-    var msg = document.getElementById('formMsg');
+  /* ================= "QUERO FAZER PARTE" FORM ================= */
+  (function joinFormModule(){
+    var FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/ajax/igrejabatistasarom@gmail.com';
 
-    // In-memory data layer (dev only). Production: replace with Supabase/backend call.
-    var members = [];
+    var form = document.getElementById('memberForm');
+    var nameInput = document.getElementById('memberName');
+    var phoneInput = document.getElementById('memberPhone');
+    var msg = document.getElementById('formMsg');
+    var submitBtn = form.querySelector('button[type="submit"]');
 
     function sanitize(str){
       return str.replace(/[<>"'`]/g, '').replace(/\s+/g,' ').trim();
-    }
-
-    function render(){
-      list.innerHTML = '';
-      empty.style.display = members.length ? 'none' : 'block';
-      members.forEach(function(name){
-        var li = document.createElement('li');
-        li.textContent = name;
-        list.appendChild(li);
-        if(window.gsap && !prefersReduced){
-          gsap.from(li, {opacity:0, y:8, duration:0.4, ease:'power2.out'});
-        }
-      });
     }
 
     function setMsg(text, type){
@@ -202,33 +188,43 @@
 
     form.addEventListener('submit', function(e){
       e.preventDefault();
-      var raw = sanitize(input.value);
+      var name = sanitize(nameInput.value);
+      var phone = sanitize(phoneInput.value);
 
-      if(!raw){
-        setMsg('Por favor, digite um nome antes de enviar.', 'error');
-        input.focus();
+      if(!name){
+        setMsg('Por favor, digite seu nome antes de enviar.', 'error');
+        nameInput.focus();
         return;
       }
-      if(raw.length > 60){
+      if(name.length > 60){
         setMsg('O nome é muito longo. Use até 60 caracteres.', 'error');
         return;
       }
-      var exists = members.some(function(m){ return m.toLowerCase() === raw.toLowerCase(); });
-      if(exists){
-        setMsg('Esse nome já está na lista. Obrigado por fazer parte!', 'error');
-        return;
-      }
 
-      setMsg('Adicionando...', '');
-      window.setTimeout(function(){
-        members.push(raw);
-        render();
-        setMsg('Nome adicionado com sucesso. Bem-vindo(a) à família!', 'success');
-        input.value = '';
-      }, 250);
+      setMsg('Enviando...', '');
+      submitBtn.disabled = true;
+
+      fetch(FORMSUBMIT_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: 'Novo interesse em fazer parte - site da igreja',
+          nome: name,
+          whatsapp: phone || 'não informado'
+        })
+      })
+        .then(function(res){ if(!res.ok) throw new Error('request failed'); return res.json(); })
+        .then(function(){
+          setMsg('Recebemos seu contato! Em breve alguém da nossa equipe vai falar com você.', 'success');
+          form.reset();
+        })
+        .catch(function(){
+          setMsg('Não foi possível enviar agora. Tente novamente em instantes.', 'error');
+        })
+        .finally(function(){
+          submitBtn.disabled = false;
+        });
     });
-
-    render();
   })();
 
   /* ================= GALLERY CAROUSEL ================= */
