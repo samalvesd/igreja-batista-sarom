@@ -321,7 +321,7 @@
 
   /* ===== IGREJAS / COMUNIDADE ===== */
   #igrejas{background:var(--warm-white-2);}
-  .community-grid{display:grid; grid-template-columns: 1fr 1.15fr; gap:clamp(2rem,5vw,4rem);}
+  .community-grid{display:grid; grid-template-columns: 1fr 1.15fr; gap:clamp(2rem,5vw,4rem); align-items:center;}
   @media (max-width:900px){ .community-grid{grid-template-columns:1fr;} }
 
   .member-box h3{font-size:1.3rem; margin-bottom:0.4rem;}
@@ -346,6 +346,9 @@
 
   /* Gallery / carousel */
   .gallery{position:relative;}
+  /* Mesmo tamanho do título ao lado (.member-box h3), para os dois topos
+     da grade alinharem na mesma altura. */
+  .gallery h3{font-size:1.3rem;}
   .gallery-viewport{
     position:relative; aspect-ratio:4/3; overflow:hidden; background:var(--black);
     border:1px solid rgba(23,23,23,0.1);
