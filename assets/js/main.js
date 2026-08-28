@@ -34,7 +34,25 @@
   /* ================= MOBILE MENU ================= */
   var toggle = document.getElementById('navToggle');
   var menu = document.getElementById('mobileMenu');
+  var scrollLockY = 0;
+
+  // Trava o scroll da página de fundo enquanto o menu está aberto. Só
+  // "overflow:hidden" no body não é suficiente no mobile (Safari/Chrome
+  // ainda deixam "arrastar" a página por baixo do overlay) — por isso
+  // fixamos o body na posição atual e restauramos ao fechar.
+  function lockScroll(){
+    scrollLockY = window.scrollY;
+    document.body.style.top = -scrollLockY + 'px';
+    document.body.classList.add('scroll-locked');
+  }
+  function unlockScroll(){
+    document.body.classList.remove('scroll-locked');
+    document.body.style.top = '';
+    window.scrollTo({top: scrollLockY, left: 0, behavior: 'instant'});
+  }
+
   function openMenu(){
+    lockScroll();
     menu.classList.add('open');
     toggle.setAttribute('aria-expanded','true');
     toggle.setAttribute('aria-label','Fechar menu');
@@ -44,6 +62,7 @@
     menu.classList.remove('open');
     toggle.setAttribute('aria-expanded','false');
     toggle.setAttribute('aria-label','Abrir menu');
+    unlockScroll();
     toggle.focus();
   }
   toggle.addEventListener('click', function(){

@@ -58,6 +58,11 @@
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
   }
+  /* Trava o scroll de fundo enquanto o menu mobile está aberto (ver
+     lockScroll/unlockScroll em main.js). */
+  body.scroll-locked{
+    position:fixed; left:0; right:0; overflow:hidden;
+  }
 
   h1,h2,h3{
     font-family:var(--serif);
