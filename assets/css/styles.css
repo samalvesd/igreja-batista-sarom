@@ -285,15 +285,34 @@
   .about-grid{
     display:grid; grid-template-columns:1fr 1fr; gap:clamp(2rem,6vw,5rem); align-items:center;
   }
+  @media (max-width:900px){ .about-grid{grid-template-columns:1fr;} }
   .about-copy p{color:#3a3a3a; margin:0 0 1.1rem;}
   .about-copy strong{color:var(--moss-deep); font-weight:600;}
-  .about-visual{
+
+  /* Composição com duas fotos: a principal em destaque, uma segunda menor
+     sobreposta no canto, como uma foto avulsa por cima — sem precisar de
+     grid extra por seção. */
+  .about-visual{position:relative;}
+  .about-visual-main{
     position:relative; aspect-ratio:4/5; background:
       linear-gradient(150deg, #eae4d6 0%, #ddd3ba 55%, #cfc2a2 100%);
     display:flex; align-items:center; justify-content:center; overflow:hidden;
   }
-  .about-visual img{width:100%; height:100%; object-fit:cover; display:block;}
-  .about-visual .ring-deco{width:70%; height:70%; top:15%; left:15%; border-color:var(--moss); z-index:1;}
+  .about-visual-main img{width:100%; height:100%; object-fit:cover; display:block;}
+  .about-visual-main .ring-deco{width:70%; height:70%; top:15%; left:15%; border-color:var(--moss); z-index:1;}
+
+  .about-visual-secondary{
+    position:absolute; z-index:2;
+    width:46%; aspect-ratio:4/5;
+    right:-7%; bottom:-9%;
+    overflow:hidden;
+    border:8px solid var(--warm-white);
+    box-shadow:0 18px 40px -16px rgba(23,23,23,0.4);
+  }
+  .about-visual-secondary img{width:100%; height:100%; object-fit:cover; display:block;}
+  @media (max-width:900px){
+    .about-visual-secondary{width:42%; right:-3%; bottom:-6%; border-width:6px;}
+  }
 
   /* ===== CULTOS ===== */
   #cultos{background:var(--black); color:var(--warm-white); position:relative;}
@@ -460,6 +479,17 @@
       background-image: var(--vine-bg);
       background-position: calc((100vw - var(--max-w)) / 2 - 72px) top;
       background-size: 60px auto;
+      background-repeat: repeat-y;
+    }
+  }
+  /* Abaixo de 1440px não sobra corredor externo, então o ramo entra
+     mais fino, dentro da própria margem lateral (--edge) das seções,
+     sem tocar no texto. */
+  @media (max-width:1439px){
+    #sobre, #cultos, #igrejas, #contato{
+      background-image: var(--vine-bg);
+      background-position: left top;
+      background-size: 16px auto;
       background-repeat: repeat-y;
     }
   }
