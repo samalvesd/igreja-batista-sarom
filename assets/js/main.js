@@ -215,7 +215,22 @@
     // mobile e com bfcache) para liberar o contexto WebGL antes de sair
     // ou recarregar a página — evita acumular contextos não liberados
     // quando a página é recarregada várias vezes seguidas.
-    window.addEventListener('pagehide', teardown);
+    //
+    // event.persisted === true significa que o navegador só está
+    // GUARDANDO a página em cache (ex.: botão "voltar"), não destruindo
+    // de verdade — nesse caso só pausamos o loop, sem descartar os
+    // recursos, e retomamos no 'pageshow' se a página voltar do cache.
+    window.addEventListener('pagehide', function(e){
+      if(e.persisted){ stop(); return; }
+      teardown();
+    });
+    window.addEventListener('pageshow', function(e){
+      // Observer continua "conectado" durante o cache (só pausamos o
+      // loop, não desconectamos) — só precisamos religar o render aqui;
+      // se o Hero não estiver mais visível, o observer pausa de novo
+      // na próxima rolagem.
+      if(e.persisted && renderer) start();
+    });
   })();
 
   /* ================= "QUERO FAZER PARTE" FORM ================= */
