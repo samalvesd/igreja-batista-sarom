@@ -235,7 +235,7 @@
     var nextBtn = document.getElementById('galleryNext');
 
     var slides = [
-      { src: 'assets/gallery/igreja-01.jpeg', caption: 'Confraternização em família' },
+      { src: 'assets/gallery/igreja-01.jpeg', caption: 'Confraternização da MUBISA' },
       { src: 'assets/gallery/igreja-02.jpeg', caption: 'Batismo nas águas' },
       { src: 'assets/gallery/igreja-03.jpeg', caption: 'Celebração de 10 anos da igreja' },
       { src: 'assets/gallery/igreja-04.jpeg', caption: 'Escola Bíblica - Iniciantes na Fé' },
