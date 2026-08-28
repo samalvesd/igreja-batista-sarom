@@ -92,7 +92,9 @@
     if(!canvas) return;
 
     var renderer, scene, camera, points, raf;
+    var geo, mat, ringGeo, ringMat;
     var mouse = {x:0, y:0};
+    var running = false;
 
     function setup(){
       var w = canvas.clientWidth, h = canvas.clientHeight;
@@ -114,18 +116,18 @@
         positions[i*3+1] = y;
         positions[i*3+2] = Math.sin(theta)*r - 4;
       }
-      var geo = new THREE.BufferGeometry();
+      geo = new THREE.BufferGeometry();
       geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
-      var mat = new THREE.PointsMaterial({
+      mat = new THREE.PointsMaterial({
         color: 0xC6A15B, size: 0.045, transparent:true, opacity:0.55, sizeAttenuation:true
       });
       points = new THREE.Points(geo, mat);
       scene.add(points);
 
       // faint ring echoing the logo
-      var ringGeo = new THREE.RingGeometry(6.6, 6.66, 80);
-      var ringMat = new THREE.MeshBasicMaterial({color:0x688B58, transparent:true, opacity:0.12, side:THREE.DoubleSide});
+      ringGeo = new THREE.RingGeometry(6.6, 6.66, 80);
+      ringMat = new THREE.MeshBasicMaterial({color:0x688B58, transparent:true, opacity:0.12, side:THREE.DoubleSide});
       var ring = new THREE.Mesh(ringGeo, ringMat);
       ring.rotation.x = Math.PI/2.3;
       ring.position.z = -4;
@@ -133,6 +135,7 @@
     }
 
     function animate(){
+      if(!running) return;
       raf = requestAnimationFrame(animate);
       if(points){
         points.rotation.y += 0.0007;
@@ -144,11 +147,49 @@
       renderer.render(scene, camera);
     }
 
+    function start(){
+      if(running) return;
+      running = true;
+      animate();
+    }
+
+    function stop(){
+      running = false;
+      if(raf) cancelAnimationFrame(raf);
+      raf = null;
+    }
+
+    // Pausa o render quando o Hero sai da tela — evita gastar GPU sem
+    // necessidade durante rolagens rápidas pelo resto da página.
+    var visibilityObserver = new IntersectionObserver(function(entries){
+      entries[0].isIntersecting ? start() : stop();
+    });
+
+    // Debounce: em mobile, o resize dispara várias vezes seguidas ao
+    // rolar (a barra de endereço esconde/aparece), sem isso empilhava
+    // trabalho de GPU em cima do loop de render.
+    var resizeTimer = null;
     function onResize(){
-      var w = canvas.clientWidth, h = canvas.clientHeight;
-      if(!w || !h) return;
-      camera.aspect = w/h; camera.updateProjectionMatrix();
-      renderer.setSize(w, h, false);
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function(){
+        var w = canvas.clientWidth, h = canvas.clientHeight;
+        if(!w || !h) return;
+        camera.aspect = w/h; camera.updateProjectionMatrix();
+        renderer.setSize(w, h, false);
+      }, 150);
+    }
+
+    function teardown(){
+      stop();
+      visibilityObserver.disconnect();
+      if(geo) geo.dispose();
+      if(mat) mat.dispose();
+      if(ringGeo) ringGeo.dispose();
+      if(ringMat) ringMat.dispose();
+      if(renderer){
+        renderer.dispose();
+        renderer.forceContextLoss();
+      }
     }
 
     window.addEventListener('mousemove', function(e){
@@ -158,13 +199,13 @@
     window.addEventListener('resize', onResize);
 
     setup();
-    animate();
+    visibilityObserver.observe(canvas);
 
-    // cleanup if hero ever unmounts (SPA-safety, defensive)
-    window.addEventListener('beforeunload', function(){
-      cancelAnimationFrame(raf);
-      renderer && renderer.dispose();
-    });
+    // 'pagehide' é mais confiável que 'beforeunload' (funciona também em
+    // mobile e com bfcache) para liberar o contexto WebGL antes de sair
+    // ou recarregar a página — evita acumular contextos não liberados
+    // quando a página é recarregada várias vezes seguidas.
+    window.addEventListener('pagehide', teardown);
   })();
 
   /* ================= "QUERO FAZER PARTE" FORM ================= */
